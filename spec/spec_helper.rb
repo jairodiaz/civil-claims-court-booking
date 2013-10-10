@@ -12,10 +12,10 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), "..", "lib")  <<
               File.join(File.dirname(__FILE__), "..", "spec") <<
               File.join(File.dirname(__FILE__), "..", ".")
 
-#require 'some_app'
+require 'court_booking_app'
 #require_relative './support/some_helper'
 
-Capybara.app = Sinatra::Application.new
+#Capybara.app = Sinatra::Application.new
 Capybara.save_and_open_page_path = File.join(File.dirname(__FILE__), "..", "tmp")
 Capybara.javascript_driver = :selenium
 
@@ -26,4 +26,9 @@ Capybara.javascript_driver = :selenium
 
 RSpec.configure do |config|
   config.include Capybara::DSL
+  config.include Rack::Test::Methods
+end
+
+def app
+  Sinatra::Application
 end
