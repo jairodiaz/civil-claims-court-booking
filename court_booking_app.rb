@@ -24,12 +24,7 @@ helpers do
   end
 end
 
-get '/book' do
-  status 200
-  "text"
-end
-
-post '/book' do
+post '/book_court' do
   status 200
   "text"
 end
