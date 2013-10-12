@@ -28,3 +28,8 @@ post '/book_court' do
   status 200
   "text"
 end
+
+post '/book_hearing' do
+  status 200
+  "text"
+end
