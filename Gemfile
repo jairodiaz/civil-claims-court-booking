@@ -7,6 +7,7 @@ gem 'grape-swagger'
 gem 'grape'
 
 group :development, :test do
+  gem 'shotgun'
   gem 'rspec', '2.13.0'
   gem 'pry'
   gem 'pry-doc'
