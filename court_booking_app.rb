@@ -4,6 +4,7 @@ require 'sinatra'
 #require 'venue_finder'
 require 'awesome_print'
 require 'pry'
+require 'grape'
 
 enable :sessions
 
@@ -29,7 +30,10 @@ post '/book_court' do
   "text"
 end
 
-post '/book_hearing' do
-  status 200
-  "text"
+class Hearing < Grape::API
+  format :json
+  post '/hearing' do
+    puts 'we are hearing'
+    { :ping => "pong" }
+  end
 end

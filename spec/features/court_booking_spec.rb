@@ -8,6 +8,7 @@ feature 'Managing Court time slot bookings' do
   end
 
   scenario 'Requesting a time for a claim' do
+    pending
     #scenario 'There is availability in the current slot' do
     post '/book_hearing', hearing_name: 'Mr. Monsanto', earliest_dat: '2013-10-15 10:00:00'
     expect(last_response.status).to eq 200

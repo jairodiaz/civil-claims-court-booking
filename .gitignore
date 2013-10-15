@@ -1,1 +1,4 @@
 coverage/
+demos/
+.DS_Store
+log/
