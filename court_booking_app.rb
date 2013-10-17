@@ -1,4 +1,5 @@
-$: << File.join(File.dirname(__FILE__), ".", "lib")
+$: << File.join(File.dirname(__FILE__), ".", "lib") <<
+      File.join(File.dirname(__FILE__), ".", "api")
 
 require 'sinatra'
 #require 'venue_finder'
@@ -26,24 +27,10 @@ helpers do
   end
 end
 
-post '/book_court' do
-  status 200
-  content_type :json
-  {
-    "session_name" => "repossesion claims",
-    "starting_date" =>  "2013-10-15",
-    "starting_hour" => "10:00:00",
-    "ending_hour" =>  "10:30:00",
-    "court_name"  => "Court 1",
-    "court_id" => 1,
-    "frequency" => "weekly"
-  }.to_json
-end
+require 'court'
+require 'hearing'
 
-class Hearing < Grape::API
-  format :json
-  post '/hearing' do
-    puts 'we are hearing'
-    { :ping => "pong" }
-  end
+class API < Grape::API
+  mount ::Court
+  mount ::Hearing
 end

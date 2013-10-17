@@ -28,5 +28,4 @@ describe 'Managing Court time slot bookings' do
     #post '/book_hearing', hearing_name: 'Mr. Monsanto', earliest_dat: '2013-10-15 10:00:00'
     #expect(last_response.status).to eq 200
   end
-
 end

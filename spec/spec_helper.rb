@@ -30,5 +30,5 @@ RSpec.configure do |config|
 end
 
 def app
-  Sinatra::Application
+  API
 end
