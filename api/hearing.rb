@@ -1,8 +1,9 @@
-class Hearing < Grape::API
-  format :json
+module BookingElements
+  class Hearing < Grape::API
+    format :json
 
-  post '/hearing' do
-    puts 'we are hearing'
-    { :ping => "pong" }
+    post '/hearing' do
+      { :the_court => "a court session!" }
+    end
   end
 end
