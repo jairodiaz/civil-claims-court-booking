@@ -3,7 +3,7 @@ module BookingElements
     format :json
 
     post '/book_court' do
-      status 200
+      status 201
       {
         "session_name" => "repossesion claims",
         "starting_date" =>  "2013-10-15",
