@@ -2,3 +2,5 @@ coverage/
 demos/
 .DS_Store
 log/
+development.db
+test.db
