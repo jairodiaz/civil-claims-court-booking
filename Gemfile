@@ -5,6 +5,8 @@ ruby "2.0.0"
 gem 'sinatra'
 gem 'grape-swagger'
 gem 'grape'
+gem 'sinatra-activerecord'
+gem 'sqlite3'
 
 group :development, :test do
   gem 'shotgun'
@@ -19,4 +21,5 @@ group :development, :test do
   gem 'vcr'
   gem 'capybara', '2.1.0'
   gem 'capybara-webkit', '1.0.0'
+  gem 'rake'
 end

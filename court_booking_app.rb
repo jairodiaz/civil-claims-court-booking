@@ -2,6 +2,7 @@ $: << File.join(File.dirname(__FILE__), ".", "lib") <<
       File.join(File.dirname(__FILE__), ".", "api")
 
 require 'sinatra'
+require 'sinatra/activerecord'
 require 'awesome_print'
 require 'pry'
 require 'grape'
