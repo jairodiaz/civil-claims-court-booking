@@ -2,7 +2,7 @@ module BookingElements
   class Court < Grape::API
     format :json
 
-    post '/book_court' do
+    post '/courts' do
       status 201
       {
         "session_name" => "repossesion claims",

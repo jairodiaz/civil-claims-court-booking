@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe 'Managing Court time slot bookings' do
+describe 'Booking a Court' do
 
-  describe 'Setting a time slot' do
+  describe 'Choosing an appointment' do
     it "should return 201" do
-      post '/book_court', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15', starting_time: '10:00:00'
+      post '/courts', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15', starting_time: '10:00:00'
       expect(last_response.status).to eq 201
     end
 
     it "should return a court booking" do
-      post '/book_court', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15 10:00:00'
+      post '/courts', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15 10:00:00'
       response = {
         "session_name" => "repossesion claims",
         "starting_date" =>  "2013-10-15",
