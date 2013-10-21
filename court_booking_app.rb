@@ -18,6 +18,11 @@ require 'hearing'
 class Court < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
+  has_many :court_bookings
+end
+
+class CourtBooking < ActiveRecord::Base
+  belongs_to :court
 end
 
 class API < Grape::API
