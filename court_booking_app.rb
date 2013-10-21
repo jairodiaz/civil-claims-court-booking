@@ -21,6 +21,6 @@ class Court < ActiveRecord::Base
 end
 
 class API < Grape::API
-  mount ::BookingElements::Court
-  mount ::BookingElements::Hearing
+  mount ::BookingElements::CourtBooking
+  mount ::BookingElements::HearingBooking
 end
