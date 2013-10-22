@@ -9,7 +9,7 @@ describe 'Booking a Court' do
 
     context 'When the court does not exist' do
       before(:each) do
-        post '/courts', court_id: 999, session_name: 'repossesion claims', starting_date: '2013-10-15', starting_time: '10:00:00'
+        post '/courts', court_id: 999, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00:00'
       end
       it "should return 402" do
         expect(last_response.status).to eq 402
@@ -22,7 +22,7 @@ describe 'Booking a Court' do
     context 'When the court exists' do
       before(:each) do
         unless example.metadata[:skip_before]
-          post '/courts', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15', starting_time: '10:00:00'
+          post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00:00'
         end
       end
 
@@ -47,11 +47,19 @@ describe 'Booking a Court' do
 
       it "should find the court", skip_before: true do
         Court.should_receive(:where).with({:id => "1"}).and_return(mock("court").as_null_object)
-        post '/courts', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15', starting_time: '10:00:00'
+        post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00:00'
       end
 
-      xit "should store a court booking", skip_before: true do
-
+      it "should store a court booking", skip_before: true do
+        CourtBooking.should_receive(:create).with({
+          :name => "repossesion claims",
+          :starting_date => "2013-10-15",
+          :starting_hour => "10:00:00",
+          :ending_hour => "10:00:00",
+          :frequency => "weekly",
+          :court_id => 1
+        })
+        post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00:00'
       end
     end
   end

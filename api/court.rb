@@ -8,8 +8,17 @@ module BookingElements
         status 402
         return {}
       end
+
+      ::CourtBooking.create({
+        name: params[:name],
+        starting_date: params[:starting_date],
+        starting_hour: params[:starting_hour],
+        ending_hour: (params[:ending_hour] || params[:starting_hour]),
+        frequency: params[:frequency] || "weekly",
+        court_id: court.id
+      })
+
       status 201
-      court.court_bookings.create({name: params[:name], starting_date: params[:starting_date]})
       {
         "name" => "repossesion claims",
         "starting_date" =>  "2013-10-15",
