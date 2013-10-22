@@ -12,6 +12,15 @@ helpers do
   alias_method :h, :escape_html
 end
 
+# Database configuration for different environments
+database_urls = {
+  :development => 'sqlite://bookings-development.db',
+  :production     => 'sqlite://bookings-production.db',
+  :test       => 'sqlite://bookings-test.db'
+}
+puts "Running with database for #{settings.environment} environment"
+set :database, database_urls[settings.environment]
+
 require 'court'
 require 'hearing'
 
