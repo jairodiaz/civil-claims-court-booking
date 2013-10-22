@@ -3,8 +3,13 @@ module BookingElements
     format :json
 
     post '/courts' do
+      court = ::Court.where(id: params[:court_id]).first
+      if court.nil?
+        status 402
+        return {}
+      end
       status 201
-      court = ::Court.find(params[:court_id])
+      court.court_bookings.create()
       {
         "name" => "repossesion claims",
         "starting_date" =>  "2013-10-15",
