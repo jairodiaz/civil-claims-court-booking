@@ -9,7 +9,7 @@ module BookingElements
         return {}
       end
       status 201
-      court.court_bookings.create()
+      court.court_bookings.create({name: params[:name], starting_date: params[:starting_date]})
       {
         "name" => "repossesion claims",
         "starting_date" =>  "2013-10-15",

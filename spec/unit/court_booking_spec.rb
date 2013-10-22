@@ -2,37 +2,10 @@ require 'spec_helper'
 
 describe 'Booking a Court' do
   before(:all) do
-    Court.create(name: 'Test Court') #id should be 1
+    Court.find_or_create_by_name(name: 'Test Court')
   end
 
   describe 'Choosing an appointment' do
-
-    it "should return 201" do
-      post '/courts', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15', starting_time: '10:00:00'
-      expect(last_response.status).to eq 201
-    end
-
-    it "should return a court booking" do
-      post '/courts', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15', starting_time: '10:00:00'
-      response = {
-        "name" => "repossesion claims",
-        "starting_date" => "2013-10-15",
-        "starting_hour" => "10:00:00",
-        "ending_hour" =>  "10:30:00",
-        "frequency" => "weekly",
-        "court" => {
-          "id" => 1,
-          "name" => "Test Court"
-        }
-      }
-      expect(last_response.body).to eq response.to_json
-    end
-
-    it "should find the court" do
-      pending
-      Court.should_receive(:find)
-      post '/courts', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15', starting_time: '10:00:00'
-    end
 
     context 'When the court does not exist' do
       before(:each) do
@@ -46,10 +19,41 @@ describe 'Booking a Court' do
       end
     end
 
-    xit "should store a court booking" do
+    context 'When the court exists' do
+      before(:each) do
+        unless example.metadata[:skip_before]
+          post '/courts', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15', starting_time: '10:00:00'
+        end
+      end
 
+      it "should return 201" do
+        expect(last_response.status).to eq 201
+      end
+
+      it "should return a court booking" do
+        response = {
+          "name" => "repossesion claims",
+          "starting_date" => "2013-10-15",
+          "starting_hour" => "10:00:00",
+          "ending_hour" =>  "10:30:00",
+          "frequency" => "weekly",
+          "court" => {
+            "id" => 1,
+            "name" => "Test Court"
+          }
+        }
+        expect(last_response.body).to eq response.to_json
+      end
+
+      it "should find the court", skip_before: true do
+        Court.should_receive(:where).with({:id => "1"}).and_return(mock("court").as_null_object)
+        post '/courts', court_id: 1, session_name: 'repossesion claims', starting_date: '2013-10-15', starting_time: '10:00:00'
+      end
+
+      xit "should store a court booking", skip_before: true do
+
+      end
     end
-
   end
 
   describe 'Requesting a time for a claim' do
