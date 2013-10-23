@@ -71,7 +71,7 @@ describe 'Booking a Court' do
       end
 
       it "should store a court booking", skip_before: true do
-        CourtBooking.should_receive(:create!).with({
+        CourtBooking.should_receive(:create).with({
           :name => "repossesion claims",
           :starting_date => Date.parse("2013-10-15"),
           :starting_hour => Time.parse("2013-10-23 10:00:00 +0100"),
@@ -80,6 +80,18 @@ describe 'Booking a Court' do
           :court_id => 1
         })
         post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00'
+      end
+    end
+
+    context 'when the request has an invalid parameter' do
+      before(:each) do
+        post '/courts', court_id: 1, starting_date: 'Some string', starting_hour: '10:00'
+      end
+      it "should return 422" do
+        expect(last_response.status).to eq 422
+      end
+      it "should return empty if the court is not found" do
+        expect(last_response.body).to eq({"error" => "Booking not created"}.to_json)
       end
     end
   end
