@@ -18,7 +18,7 @@ module BookingElements
         name: params[:name],
         starting_date: Date.parse(params[:starting_date]),
         starting_hour: Time.parse(params[:starting_hour]),
-        ending_hour: Time.parse(params[:ending_hour] || params[:starting_hour]),
+        ending_hour: Time.parse(params[:starting_hour]) + (60 * 30),
         frequency: params[:frequency] || "weekly",
         court_id: court.id
       })
