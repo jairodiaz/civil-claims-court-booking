@@ -9,20 +9,20 @@ describe 'Booking a Court' do
 
     context 'When the court does not exist' do
       before(:each) do
-        post '/courts', court_id: 999, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00:00'
+        post '/courts', court_id: 999, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00'
       end
-      it "should return 402" do
-        expect(last_response.status).to eq 402
+      it "should return 422" do
+        expect(last_response.status).to eq 422
       end
       it "should return empty if the court is not found" do
-        expect(last_response.body).to eq({}.to_json)
+        expect(last_response.body).to eq({"error" => "Court not found"}.to_json)
       end
     end
 
     context 'When the court exists' do
       before(:each) do
         unless example.metadata[:skip_before]
-          post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00:00'
+          post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00'
         end
       end
 
@@ -67,7 +67,7 @@ describe 'Booking a Court' do
 
       it "should find the court", skip_before: true do
         Court.should_receive(:where).with({:id => "1"}).and_return(mock("court").as_null_object)
-        post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00:00'
+        post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00'
       end
 
       it "should store a court booking", skip_before: true do
@@ -79,7 +79,7 @@ describe 'Booking a Court' do
           :frequency => "weekly",
           :court_id => 1
         })
-        post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00:00'
+        post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00'
       end
     end
   end

@@ -7,11 +7,7 @@ module BookingElements
 
     post '/courts' do
       court = ::Court.where(id: params[:court_id]).first
-      if court.nil?
-        # Error: Court not found
-        status 402
-        return {}
-      end
+      error!('Court not found', 422) if court.nil? # It may be 402
 
       #::CourtBooking.create does not work!
       booking = ::CourtBooking.create!({
@@ -23,11 +19,7 @@ module BookingElements
         court_id: court.id
       })
 
-      if booking.nil?
-        # Error: Booking not created
-        status 402
-        return {}
-      end
+      error!('Booking not created', 422) if booking.nil?
 
       status 201
       {
