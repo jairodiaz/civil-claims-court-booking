@@ -1,35 +1,47 @@
 module BookingElements
+  def self.format_time(time)
+    time.strftime("%H:%M")
+  end
   class CourtBooking < Grape::API
     format :json
 
     post '/courts' do
       court = ::Court.where(id: params[:court_id]).first
       if court.nil?
+        # Error: Court not found
         status 402
         return {}
       end
 
-      ::CourtBooking.create({
+      #::CourtBooking.create does not work!
+      booking = ::CourtBooking.create!({
         name: params[:name],
-        starting_date: params[:starting_date],
-        starting_hour: params[:starting_hour],
-        ending_hour: (params[:ending_hour] || params[:starting_hour]),
+        starting_date: Date.parse(params[:starting_date]),
+        starting_hour: Time.parse(params[:starting_hour]),
+        ending_hour: Time.parse(params[:ending_hour] || params[:starting_hour]),
         frequency: params[:frequency] || "weekly",
         court_id: court.id
       })
 
+      if booking.nil?
+        # Error: Booking not created
+        status 402
+        return {}
+      end
+
       status 201
       {
-        "name" => "repossesion claims",
-        "starting_date" =>  "2013-10-15",
-        "starting_hour" => "10:00:00",
-        "ending_hour" =>  "10:30:00",
-        "frequency" => "weekly",
+        "name" => booking.name,
+        "starting_date" =>  booking.starting_date,
+        "starting_hour" => BookingElements.format_time(booking.starting_hour),
+        "ending_hour" => BookingElements.format_time(booking.ending_hour),
+        "frequency" => booking.frequency,
         "court" => {
           "id" => court.id,
           "name" => court.name
         }
       }
     end
+
   end
 end
