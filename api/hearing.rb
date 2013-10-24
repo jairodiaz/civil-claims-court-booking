@@ -1,5 +1,5 @@
 module BookingElements
-  class HearingBooking < Grape::API
+  class HearingAPI < Grape::API
     format :json
 
     post '/hearings' do

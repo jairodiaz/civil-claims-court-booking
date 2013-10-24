@@ -71,7 +71,7 @@ describe 'Booking a Court' do
       end
 
       it "should store a court booking", skip_before: true do
-        CourtBooking.should_receive(:create).with({
+        CourtBooking.should_receive(:create!).with({
           :name => "repossesion claims",
           :starting_date => Date.parse("2013-10-15"),
           :starting_hour => Time.parse("2013-10-23 10:00:00 +0100"),

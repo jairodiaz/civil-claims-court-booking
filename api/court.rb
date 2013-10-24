@@ -2,7 +2,7 @@ module BookingElements
   def self.format_time(time)
     time.strftime("%H:%M")
   end
-  class CourtBooking < Grape::API
+  class CourtAPI < Grape::API
     format :json
 
     post '/courts' do
@@ -10,11 +10,12 @@ module BookingElements
       error!('Court not found', 422) if court.nil? # It may be 402
 
       begin
-        booking = ::CourtBooking.create({
+        starting_hour = Time.parse("2013-10-23 #{params[:starting_hour]}")
+        booking = ::CourtBooking.create!({
           name: params[:name],
           starting_date: Date.parse(params[:starting_date]),
-          starting_hour: Time.parse(params[:starting_hour]),
-          ending_hour: Time.parse(params[:starting_hour]) + (60 * 30),
+          starting_hour: starting_hour,
+          ending_hour: starting_hour + 30.minutes,
           frequency: params[:frequency] || "weekly",
           court_id: court.id
         })
