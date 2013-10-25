@@ -21,6 +21,8 @@ database_urls = {
 puts "Running with database for #{settings.environment} environment"
 set :database, database_urls[settings.environment]
 
+ActiveRecord::Base.logger = Logger.new File.expand_path("../log/#{settings.environment}.log", __FILE__)
+
 require 'court'
 require 'hearing'
 

@@ -7,6 +7,7 @@ gem 'grape-swagger'
 gem 'grape'
 gem 'sinatra-activerecord'
 gem 'sqlite3'
+gem 'sinatra-logger'
 
 group :development, :test do
   gem 'shotgun'
