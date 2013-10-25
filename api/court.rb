@@ -5,15 +5,20 @@ module BookingElements
   class CourtAPI < Grape::API
     format :json
 
+    params do
+      requires :court_id, type: Integer, desc: 'Court id.'
+      requires :starting_date, type: Date, desc: 'Starting date.'
+      requires :starting_hour, type: Time, desc: 'Starting hour.'
+    end
     post '/courts' do
       court = ::Court.where(id: params[:court_id]).first
       error!('Court not found', 422) if court.nil? # It may be 402
 
       begin
-        starting_hour = Time.parse("2013-10-23 #{params[:starting_hour]}")
+        starting_hour = params[:starting_hour]
         booking = ::CourtBooking.create!({
           name: params[:name],
-          starting_date: Date.parse(params[:starting_date]),
+          starting_date: params[:starting_date],
           starting_hour: starting_hour,
           ending_hour: starting_hour + 30.minutes,
           frequency: params[:frequency] || "weekly",
@@ -32,8 +37,8 @@ module BookingElements
             "name" => court.name
           }
         }
-      rescue
-        error!('Booking not created', 422)
+      rescue => e
+        error!("Booking not created: #{e.message}", 422)
       end
     end
   end
