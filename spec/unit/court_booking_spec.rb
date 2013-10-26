@@ -74,8 +74,8 @@ describe 'Booking a Court' do
         CourtBooking.should_receive(:create!).with({
           :name => "repossesion claims",
           :starting_date => Date.parse("2013-10-15"),
-          :starting_hour => Time.parse("#{Time.now.strftime("%Y-%m-%d")} 10:00:00 +0100"),
-          :ending_hour => Time.parse("#{Time.now.strftime("%Y-%m-%d")} 10:30:00 +0100"),
+          :starting_hour => Time.parse("#{Time.now.strftime("%Y-%m-%d")} 10:00:00"),
+          :ending_hour => Time.parse("#{Time.now.strftime("%Y-%m-%d")} 10:30:00"),
           :frequency => "weekly",
           :court_id => 1
         }).and_return(mock("court").as_null_object)
