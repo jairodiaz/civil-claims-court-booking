@@ -6,6 +6,7 @@ require 'sinatra/activerecord'
 require 'awesome_print'
 require 'pry'
 require 'grape'
+require 'grape-entity'
 
 helpers do
   include Rack::Utils
@@ -30,6 +31,14 @@ class Court < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   has_many :court_bookings
+
+  def entity
+    Entity.new(self)
+  end
+
+  class Entity < Grape::Entity
+    expose :name, :starting_date, :starting_hour, :ending_hour, :frequency
+  end
 end
 
 class CourtBooking < ActiveRecord::Base

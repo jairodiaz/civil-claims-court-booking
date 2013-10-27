@@ -5,6 +5,7 @@ ruby "2.0.0"
 gem 'sinatra'
 gem 'grape-swagger'
 gem 'grape'
+gem 'grape-entity'
 gem 'sinatra-activerecord'
 gem 'sqlite3'
 gem 'sinatra-logger'
