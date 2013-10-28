@@ -85,7 +85,7 @@ describe 'Booking a Court' do
 
     context 'when the request has an invalid parameter' do
       before(:each) do
-        post '/courts', court_id: 1, starting_date: 'Some string', starting_hour: '10:00'
+        post '/courts', court_id: 1, name: 'some name', starting_date: 'Some string', starting_hour: '10:00'
       end
       it "should return 400" do
         expect(last_response.status).to eq 400

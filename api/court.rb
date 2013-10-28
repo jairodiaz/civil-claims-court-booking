@@ -6,11 +6,13 @@ module BookingElements
     format :json
 
     params do
+      requires :name, type: String, desc: 'Name of the booking.'
       requires :court_id, type: Integer, desc: 'Court id.'
       requires :starting_date, type: Date, desc: 'Starting date.'
       requires :starting_hour, type: Time, desc: 'Starting hour.'
     end
     post '/courts' do
+      logger.info("Params are: #{params}")
       court = ::Court.where(id: params[:court_id]).first
       error!('Court not found', 422) if court.nil? # It may be 402
 

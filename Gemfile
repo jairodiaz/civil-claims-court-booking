@@ -9,6 +9,7 @@ gem 'grape-entity'
 gem 'sinatra-activerecord'
 gem 'sqlite3'
 gem 'sinatra-logger'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   gem 'shotgun'
