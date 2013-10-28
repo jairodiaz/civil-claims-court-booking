@@ -56,7 +56,7 @@ describe 'Booking a Court' do
           expect(frequency).to eq('weekly')
         end
 
-        xit "should contain a expanded court json object" do
+        it "should contain a expanded court json object" do
           court = JSON.parse(last_response.body)['court']
           expect(court).to eq({
             "id" => 1,

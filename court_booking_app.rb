@@ -31,7 +31,10 @@ class Court < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   has_many :court_bookings
+end
 
+class CourtBooking < ActiveRecord::Base
+  belongs_to :court
   def entity
     Entity.new(self)
   end
@@ -45,11 +48,10 @@ class Court < ActiveRecord::Base
       expose :ending_hour
     end
     expose :frequency
+    expose :court do |booking, options|
+      options[:court].serializable_hash
+    end
   end
-end
-
-class CourtBooking < ActiveRecord::Base
-  belongs_to :court
 end
 
 class API < Grape::API

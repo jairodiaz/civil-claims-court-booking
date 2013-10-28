@@ -26,7 +26,7 @@ module BookingElements
         })
 
         status 201
-        present booking, with: ::Court::Entity
+        present booking, with: ::CourtBooking::Entity, court: court
       rescue => e
         error!("Booking not created: #{e.message}", 422)
       end
