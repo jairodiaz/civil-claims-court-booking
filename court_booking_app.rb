@@ -37,7 +37,14 @@ class Court < ActiveRecord::Base
   end
 
   class Entity < Grape::Entity
-    expose :name, :starting_date, :starting_hour, :ending_hour, :frequency
+    format_with(:hour_format) { |time| time.strftime("%H:%M") }
+    expose :name
+    expose :starting_date
+    with_options(format_with: :hour_format) do
+      expose :starting_hour
+      expose :ending_hour
+    end
+    expose :frequency
   end
 end
 

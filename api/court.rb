@@ -26,17 +26,7 @@ module BookingElements
         })
 
         status 201
-        {
-          "name" => booking.name,
-          "starting_date" => booking.starting_date,
-          "starting_hour" => BookingElements.format_time(booking.starting_hour),
-          "ending_hour" => BookingElements.format_time(booking.ending_hour),
-          "frequency" => booking.frequency,
-          "court" => {
-            "id" => court.id,
-            "name" => court.name
-          }
-        }
+        present booking, with: ::Court::Entity
       rescue => e
         error!("Booking not created: #{e.message}", 422)
       end
