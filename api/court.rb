@@ -1,7 +1,4 @@
 module BookingElements
-  def self.format_time(time)
-    time.strftime("%H:%M")
-  end
   class CourtAPI < Grape::API
     format :json
 
@@ -11,6 +8,7 @@ module BookingElements
       requires :starting_date, type: Date, desc: 'Starting date.'
       requires :starting_hour, type: Time, desc: 'Starting hour.'
     end
+
     post '/courts' do
       logger.info("Params are: #{params}")
       court = ::Court.where(id: params[:court_id]).first

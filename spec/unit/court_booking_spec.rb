@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Booking a Court' do
   before(:all) do
-    Court.find_or_create_by_name(name: 'Test Court')
+    Court.find_or_create_by(name: 'Test Court')
   end
 
   describe 'Choosing an appointment' do
@@ -66,7 +66,7 @@ describe 'Booking a Court' do
       end
 
       it "should find the court", skip_before: true do
-        Court.should_receive(:where).with({:id => 1}).and_return(mock("court").as_null_object)
+        Court.should_receive(:where).with({:id => 1}).and_return(double("court").as_null_object)
         post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00'
       end
 
@@ -78,7 +78,7 @@ describe 'Booking a Court' do
           :ending_hour => Time.parse("#{Time.now.strftime("%Y-%m-%d")} 10:30:00"),
           :frequency => "weekly",
           :court_id => 1
-        }).and_return(mock("court").as_null_object)
+        }).and_return(double("court").as_null_object)
         post '/courts', court_id: 1, name: 'repossesion claims', starting_date: '2013-10-15', starting_hour: '10:00'
       end
     end
@@ -94,11 +94,5 @@ describe 'Booking a Court' do
         expect(last_response.body).to eq({"error" => "starting_date is invalid"}.to_json)
       end
     end
-  end
-
-  describe 'Requesting a time for a claim' do
-    #scenario 'There is availability in the current slot' do
-    #post '/book_hearing', hearing_name: 'Mr. Monsanto', earliest_dat: '2013-10-15 10:00:00'
-    #expect(last_response.status).to eq 200
   end
 end

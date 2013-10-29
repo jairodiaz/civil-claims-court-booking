@@ -3,13 +3,13 @@ source "https://rubygems.org"
 ruby "2.0.0"
 
 gem 'sinatra'
+gem 'sinatra-activerecord'
+gem 'sinatra-logger'
 gem 'grape-swagger'
 gem 'grape'
 gem 'grape-entity'
-gem 'sinatra-activerecord'
-gem 'sqlite3'
-gem 'sinatra-logger'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'sqlite3'
 
 group :development, :test do
   gem 'shotgun'

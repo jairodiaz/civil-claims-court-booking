@@ -1,4 +1,4 @@
-$: << File.join(File.dirname(__FILE__), ".", "lib") <<
+$: << File.join(File.dirname(__FILE__), ".", "app") <<
       File.join(File.dirname(__FILE__), ".", "api")
 
 require 'sinatra'
@@ -17,7 +17,7 @@ end
 # Database configuration for different environments
 database_urls = {
   :development => 'sqlite://bookings-development.db',
-  :production     => 'sqlite://bookings-production.db',
+  :production  => 'sqlite://bookings-production.db',
   :test       => 'sqlite://bookings-test.db'
 }
 puts "Running with database for #{settings.environment} environment"
@@ -28,33 +28,8 @@ ActiveRecord::Base.logger = Logger.new File.expand_path("../log/#{settings.envir
 
 require 'court'
 require 'hearing'
-
-class Court < ActiveRecord::Base
-  validates_presence_of :name
-  validates_uniqueness_of :name
-  has_many :court_bookings
-end
-
-class CourtBooking < ActiveRecord::Base
-  belongs_to :court
-  def entity
-    Entity.new(self)
-  end
-
-  class Entity < Grape::Entity
-    format_with(:hour_format) { |time| time.strftime("%H:%M") }
-    expose :name
-    expose :starting_date
-    with_options(format_with: :hour_format) do
-      expose :starting_hour
-      expose :ending_hour
-    end
-    expose :frequency
-    expose :court do |booking, options|
-      options[:court].serializable_hash
-    end
-  end
-end
+require 'models/court'
+require 'models/court_booking'
 
 class API < Grape::API
   format :json
