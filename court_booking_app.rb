@@ -8,7 +8,6 @@ require 'pry'
 require 'grape'
 require 'grape-entity'
 require 'grape-swagger'
-require 'rack/cors'
 
 helpers do
   include Rack::Utils
@@ -26,14 +25,6 @@ set :database, database_urls[settings.environment]
 
 # Set up logger
 ActiveRecord::Base.logger = Logger.new File.expand_path("../log/#{settings.environment}.log", __FILE__)
-
-# Enable CORS for API Documentation
-use Rack::Cors do
-  allow do
-    origins '*'
-    resource '*', headers: :any, :methods => [:get, :post, :put, :delete, :options]
-  end
-end
 
 require 'court'
 require 'hearing'
@@ -66,11 +57,12 @@ class CourtBooking < ActiveRecord::Base
 end
 
 class API < Grape::API
-  content_type :txt, "text/plain"
-  #content_type :json, "application/json"
+  format :json
+  default_format :json
 
- helpers do
+  helpers do
     def logger
+      # Use the same logger as ActiveRecord
       ActiveRecord::Base.logger
     end
   end
@@ -78,6 +70,6 @@ class API < Grape::API
   mount ::BookingElements::CourtAPI
   mount ::BookingElements::HearingAPI
 
-  # Documentation available at: http://localhost:9292/swagger_doc.json
-  add_swagger_documentation api_version: 'v1'
+  # Documentation available at: http://127.0.0.1:9292/swagger_doc.json
+  add_swagger_documentation
 end

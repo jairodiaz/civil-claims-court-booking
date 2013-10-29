@@ -28,7 +28,9 @@ module BookingElements
         })
 
         status 201
+        logger.info("Returning response")
         present booking, with: ::CourtBooking::Entity, court: court
+        logger.info("Success")
       rescue => e
         error!("Booking not created: #{e.message}", 422)
       end
